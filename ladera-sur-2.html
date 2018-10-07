@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      
+      .marker {
+        background-image: url('marcadorLS.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .mapboxgl-popup {
+        max-width: 300px;
+      }
+
+      .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+      }
+
+
+
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiaWduYWNpb2FiZSIsImEiOiJsTDV0dWFJIn0.Og513NMky_08_sXUUDsrbA';
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/ignacioabe/cjhqrbrrk5d712snwuod7rnj5',
+  center: [-72.7453,-41.0799], //ubicación
+  zoom: 8
+});
+
+//CONTROLES
+
+var fulls = new mapboxgl.FullscreenControl();
+
+map.addControl(fulls, "top-left");
+
+var scale = new mapboxgl.ScaleControl({
+    maxWidth: 80,
+    unit: 'metric'
+});
+map.addControl(scale, "bottom-left");
+
+var nav = new mapboxgl.NavigationControl();
+
+map.addControl(nav, 'top-left');
+
+var geoloc = new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+});
+
+map.addControl(geoloc, "top-left");
+
+
+var puntosOctay = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.59237766265869,
+          -41.07323679118492
+        ]
+      },
+      "properties": {
+        "title": "Las Cascadas",
+        "description": "A 53 km de Puerto Octay y a solo 25 minutos de Fundo Rosales, se encuentra el poblado de Las Cascadas, reconocido por sus playas lacustres rodeadas de vegetación nativa y perfectas para practicar todo tipo de deportes náuticos como kayak. Pero en esta ocasión nuestra recomendación es a internarse en el sendero que, señalado por un rústico cartel, lleva hasta una sorprendente caída de agua de 50 metros de altura."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.884061,
+          -40.975012
+        ]
+      },
+      "properties": {
+        "title": "Museo El Colono",
+        "description": "Para conocer la historia de este poblado al sur de Chile, nada mejor que sumar al viaje una visita al Museo El Colono. Aquí, encontrarás objetos, fotografías y maquinaria que dan testimonio del desarrollo de la comuna desde sus orígenes hasta la llegada en 1852 de los colonos alemanes a la zona, cuando se establecieron las primeras 12 familias en la localidad hoy conocida como playa Maitén. Además, con suerte, podrás disfrutar de alguna de las fiestas costumbristas que suelen celebrarse en el museo como la Expo Aromas y Tradiciones que suele realizarse entre mayo y abril."
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Hotel Haase",
+        "description": "El Hotel Haase fue uno de los hoteles más importantes de Puerto Octay durante los primeros años del siglo XX y su arquitectura refleja una importante influencia de la colonización alemana en la zona. Por lo mismo, el hotel ha sido declarado como Monumento Arquitectónico.  Este lugar se ha convertido en un clásico para visitar a la hora de almuerzo, en donde su restaurant ofrece un variado menú basado en la gastronomía típica de la zona que incluye carnes, pescados y otros platos. Por la tarde una buena opción es deleitarse con sus onces alemanas con gran variedad de kuchenes y tortas."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.883122,
+          -40.97453
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "description": "Ubicado en el sector La Picada, a 29 km de Puerto Octay, frente al Lago Llanquihue este vivero ofrece todo un espectáculo a la vista: un campo de ericas de colores, una especie originaria en su mayoría de Sudáfrica, es lo primero que llama la atención. Pero con cerca de 30 años de funcionamiento, este vivero fundado por el arquitecto Fernando Gatica Morel, cultiva en general árboles, arbustos y plantas nativas, siendo su especialidad los rododendros, azaleas, hayas, magnolios y cornus.",
+        "title": "Vivero Los Ulmos"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.995908,
+          -41.183703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "description": "Una de las visitas imperdibles si estás en Puerto Octay, es el Parque Nacional Vicente Pérez Rosales ubicado a sólo 60 kilómetros de distancia del pueblo y colindante con el Fundo Rosales. Aquí, además de la oportunidad de disfrutar rodeados del bosque siempreverde y especies como huillines, monitos del monte, patos corta corriente, carpinteros negros o martines, existe una gran cantidad de senderos disponibles para recorrer, entre los que destacan Saltos del río Petrohué (0,6 km) o Los Enamorados (0,9 km) ideales para hacer con niños) o bien excursiones más exigentes como la que lleva hasta la cima del volcán Osorno, de 6 km de largo (10 horas de caminata aprox.)",
+        "title": "Parque Nacional Vicente Pérez Rosales"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.45118618011475,
+          -41.17320300678586
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Visita guiada Quesos Chiriuco",
+        "description": "Un buen panorama para ir con niños, es visitar el  Fundo Las Mercedes de Chiriuco, en el kilómetro 4 del camino Chiriuco-Nochaco s/n, Puerto Octay. Aquí ofrecen la posibilidad de realizar una visita guiada en donde podrán conocer el proceso de producción de sus premiados quesos, a sus ovejas pastando libres, y luego degustar algunos de sus quesos estrella."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.843346,
+          -40.882373
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Botes de Octay",
+        "description": "Para quienes estén pensando en quedarse más tiempo en esta pintoresca localidad o vivan cerca, una excelente opción es participar de los talleres de Botes de Octay, una iniciativa privada que busca impulsar actividades que reúnan a la familia, ligadas al disfrute del lago que los rodea y a la vez rescatar oficios tradicionales como la construcción y carpintería naval. Aquí los niños podrán crear su propio velero y luego navegar con él en el lago."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.88120865821838,
+          -40.97880461126665
+        ]
+      }
+    }
+  ]
+};
+
+map.on('load', function(e) {
+  
+
+  // add markers to map
+  puntosOctay.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el, {offset: [0, -25]})
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+    .addTo(map);
+
+  });
+
+      map.fitBounds([
+        [-73.13049,-41.2458049],
+        [-72.364196,-40.8293977]
+      ]);
+
+});
+
+</script>
+
+</body>
+</html>

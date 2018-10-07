@@ -1,0 +1,80 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-symbol": "embassy",
+        "name": "Llegada",
+        "description": "Punto final del recorrido."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.25959431380033,
+          -40.14204556122422
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-symbol": "campsite",
+        "name": "Primer campamento",
+        "description": "Primera noche de alojamiento, en el medio de un bosque nevado."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.05882820300758,
+          -39.982487903907895
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-symbol": "campsite",
+        "name": "Segundo campamento",
+        "description": "Segunda noche, en un pequeño valle, fuera de los límites de la reserva."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.15844670310616,
+          -40.03715115599334
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-symbol": "embassy",
+        "name": "Partida",
+        "description": "Inicio del recorrido a través de la reserva."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.09567580372095,
+          -39.93706779554486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-symbol": "triangle",
+        "name": "Punto de mayor altitud",
+        "description": "1670 msnm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.04714047722518,
+          -39.9622886069119
+        ]
+      }
+    }
+  ]
+}

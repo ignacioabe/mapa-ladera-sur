@@ -1,0 +1,25 @@
+{
+  type: "FeatureCollection",
+  features: [{
+    type: "Feature",
+    geometry: {
+      type: "Point",
+      coordinates: [-72.59237766265869,-41.07323679118492]
+    },
+    properties: {
+      title: "Las Cascadas",
+      description: "Pero en esta ocasión nuestra recomendación es a internarse en el sendero que, señalado por un rústico cartel, lleva hasta una sorprendente caída de agua de 50 metros de altura."
+    }
+  },
+  {
+    type: "Feature",
+    geometry: {
+      type: "Point",
+      coordinates: [-72.88364410400389,-40.970307417212034]
+    },
+    properties: {
+      title: "Puerto Octay",
+      description: "???"
+    }
+  }]
+};

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Recorrido invernal por la reserva Mocho Choshuenco</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+        .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+        
+        .marker {
+        background-image: url('mapbox-icon.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaWduYWNpb2FiZSIsImEiOiJsTDV0dWFJIn0.Og513NMky_08_sXUUDsrbA';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/ignacioabe/cjhqrbrrk5d712snwuod7rnj5',
+    center: [-72.1376,-40.0224], //ubicación
+    zoom: 10
+});
+
+//CONTROLES
+
+var fulls = new mapboxgl.FullscreenControl();
+
+map.addControl(fulls, "top-left");
+
+var scale = new mapboxgl.ScaleControl({
+    maxWidth: 80,
+    unit: 'metric'
+});
+map.addControl(scale, "bottom-left");
+
+var nav = new mapboxgl.NavigationControl();
+
+map.addControl(nav, 'top-left');
+
+var geoloc = new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+});
+
+map.addControl(geoloc, "top-left");
+
+map.on('load', function () {
+
+    map.addSource('recorrido', { type: 'geojson', data: "./ladera-sur-ruta.geojson" });
+    map.addLayer({
+        "id": "recorrido",
+        "type": "line",
+        "source": "recorrido",
+        "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+        },
+        "paint": {
+            "line-color": "#a00",
+            "line-width": 3,
+            "line-opacity": 0.8
+        }
+    });
+
+    map.addSource('puntos', { type: 'geojson', data: "./ladera-sur-puntos.geojson" });
+    map.addLayer({
+        "id": "puntos",
+        "type": "symbol",
+        "source": "puntos",
+        "layout": {
+            "icon-image": "{marker-symbol}-15",
+            "icon-allow-overlap": true
+        }
+    });
+
+    // When a click event occurs on a feature in the puntos layer, open a popup at the
+    // location of the feature, with description HTML from its properties.
+    map.on('click', 'puntos', function (e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+        var name = e.features[0].properties.name;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(`<strong>${name}</strong><p>${description}</p>`)
+            .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the puntos layer.
+    map.on('mouseenter', 'puntos', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'puntos', function () {
+        map.getCanvas().style.cursor = '';
+    });
+});
+</script>
+
+</body>
+</html>
